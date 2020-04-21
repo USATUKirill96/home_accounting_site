@@ -14,7 +14,9 @@ class PasswordChangeCustom(auth_views.PasswordChangeView):
 
 @login_required
 def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+    spends = requests.get(f'http://localhost:8000/api/spends?user_id={request.user.pk}&source=site')
+    spends = spends.json()
+    return render(request, 'website/dashboard.html', {'section': 'dashboard', 'spends': spends['Spendings']})
 
 
 def register(request):
@@ -28,11 +30,10 @@ def register(request):
             # Сохраняем пользователя в базе данных.
             new_user.save()
             # Создание профиля пользователя
-            token = secrets.token_hex(32)
-            requests.post('http://127.0.0.1:8000/api/users/', data={'user_id': str(new_user.pk), 'token': token})
+            requests.post('http://127.0.0.1:8000/api/users/', data={'user_id': str(new_user.pk)})
     else:
         user_form = CustomUserRegistrationForm()
-    return render(request, 'account/register.html', {'user_form': user_form})
+    return render(request, 'website/register.html', {'user_form': user_form})
 
 
 @login_required
@@ -47,5 +48,5 @@ def edit(request):
             messages.error(request, 'Ошибка при обновлении профиля')
     else:
         user_form = UserEditForm(instance=request.user)
-    return render(request, 'account/edit.html',
+    return render(request, 'website/edit.html',
                   {'user_form': user_form})

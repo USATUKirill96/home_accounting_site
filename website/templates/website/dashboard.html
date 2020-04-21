@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard {% endblock %}
+
+{% block content %}
+    <h1>Список ваших трат</h1>
+<table align="centet" border="1" cellpadding="4" cellspacing="4" frame="solid">
+    <tr>
+        <td bgcolor="#FFC0CB">Категория</td><td bgcolor="#FFA07A">Наименование</td><td bgcolor="#FFFFE0">Сумма</td>
+    </tr>
+{% for spend in spends %}
+    <tr>
+        <td bgcolor="#FFC0CB">{{spend.category}}</td>
+        <td bgcolor="#FFA07A">{{spend.name}}</td>
+        <td bgcolor="#FFFFE0">{{spend.sum}}</td>
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}
