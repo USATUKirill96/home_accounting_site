@@ -1,10 +1,11 @@
 import requests
+from datetime import date as currentdate
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib import messages
 
-from .forms import CustomUserRegistrationForm, CustomPasswordChange, UserEditForm, SpendsAddForm
+from .forms import CustomUserRegistrationForm, CustomPasswordChange, UserEditForm, SpendsAddForm, SpendsPeriodForm
 
 
 class PasswordChangeCustom(auth_views.PasswordChangeView):
@@ -13,21 +14,32 @@ class PasswordChangeCustom(auth_views.PasswordChangeView):
 
 @login_required
 def dashboard(request):
+    global spends
     if request.method == 'POST':
         spends_form = SpendsAddForm(request.POST)
+        period_form = SpendsPeriodForm(request.POST)
         if spends_form.is_valid():
             date = spends_form.cleaned_data['date']
             category = spends_form.cleaned_data['category']
             name = spends_form.cleaned_data['name']
             sum = spends_form.cleaned_data['sum']
             requests.post('http://localhost:8000/api/spends/', data={'user_id': request.user.pk, 'source': 'site',
-                                                                'category': category,'date': date,
-                                                                'name': name, 'sum': sum, 'common': 'False'})
-    spends_form = SpendsAddForm()
-    spends = requests.get(f'http://localhost:8000/api/spends?user_id={request.user.pk}&source=site')
+                                                                     'category': category, 'date': date,
+                                                                     'name': name, 'sum': sum, 'common': 'False'})
+        if period_form.is_valid():
+            month = period_form.cleaned_data['month']
+            year = period_form.cleaned_data['year']
+            spends = requests.get(
+                f'http://localhost:8000/api/spends?user_id={request.user.pk}&source=site&month={month}&year={year}')
+    else:
+        spends_form = SpendsAddForm()
+        period_form = SpendsPeriodForm()
+        spends = requests.get(
+            f'http://localhost:8000/api/spends?user_id={request.user.pk}&source=site&'
+            f'month={currentdate.today().month}&year={currentdate.today().year}')
     spends = spends.json()
-    return render(request, 'website/dashboard.html', {'section': 'dashboard', 'spends': spends['Spendings'],
-                                                      'spends_form': spends_form})
+    return render(request, 'website/dashboard.html', {'section': 'dashboard', 'spends_form': spends_form,
+                                                      'period_form': period_form, 'spends': spends['Spendings']})
 
 
 def register(request):

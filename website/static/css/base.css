@@ -268,3 +268,18 @@ img.user-detail {
     font-style:italic;
     color:#ccc;
 }
+table{
+margin-left: auto;
+margin-right: auto;
+text-align: center;
+border: 1px;
+cellpadding: 4px;
+cellspacing: 4px;
+frame: solid;
+}
+.period{
+text-align: center;
+margin-left: auto;
+margin-right: auto;
+}
+

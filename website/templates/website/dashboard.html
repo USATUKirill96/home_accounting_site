@@ -13,9 +13,24 @@
     cellspacing: 4px;
     frame: solid;
     }
+    .period{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    }
 
 </style>
     <h1 align="center">Список ваших трат</h1>
+<table>
+    <tr>
+<form class="period" action="." method="post">
+    <td>{{period_form.month}}</td>
+    <td>{{period_form.year}}</td>
+    <td>{% csrf_token %}</td>
+    <td><input type="submit" value="Вывести список трат"></td>
+</form>
+    </tr>
+</table>
 <table>
     <tr>
         <td bgcolor="#FFA07A">Дата</td><td bgcolor="#FFC0CB">Категория</td>

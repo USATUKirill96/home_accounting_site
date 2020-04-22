@@ -44,12 +44,20 @@ class UserEditForm(forms.ModelForm):
 
 
 CHOICES = (("Другое", "другое"), ("Продукты", "продукты"), ("Развлечения", "развлечения"),
-               ("Бытовые", "бытовые"), ("Здоровье", "здоровье"), ("Транспорт", "транспорт"),
-               ("Животные", "животные"))
+           ("Бытовые", "бытовые"), ("Здоровье", "здоровье"), ("Транспорт", "транспорт"),
+           ("Животные", "животные"))
+
 
 class SpendsAddForm(forms.Form):
-
     date = forms.DateField(widget=forms.widgets.SelectDateWidget(), initial=date.today())
     category = forms.ChoiceField(choices=CHOICES)
     name = forms.CharField(label="Название покупки")
     sum = forms.IntegerField(label="Сумма")
+
+
+MONTHS = ((3, "март"), (4, "апрель"), (5, "май"))
+
+
+class SpendsPeriodForm(forms.Form):
+    month = forms.ChoiceField(choices=MONTHS, initial=date.today().month.as_integer_ratio())
+    year = forms.IntegerField(initial=date.today().year)
