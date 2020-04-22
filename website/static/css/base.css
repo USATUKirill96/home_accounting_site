@@ -109,14 +109,7 @@ input, textarea {
     padding:6px 10px;
     font-size:14px;
 }
-input[type=submit], a.button {
-    font-weight:bold;
-    background:#12c064;
-    color:#fff;
-    padding:10px 20px;
-    font-size:14px;
-    text-transform:uppercase;
-}
+
 .errorlist {
     color:#cc0033;
     float:left;

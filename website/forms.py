@@ -3,7 +3,7 @@ from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.utils.translation import gettext as _
 from django.utils.html import format_html
 from django.contrib.auth.models import User
-
+from datetime import date
 
 PASSWORD_HELP_TEXT = format_html("""<dl>Ваш пароль не может быть похож на имя пользователя <br>
           Ваш пароль должен содержать как минимум 8 символов <br>
@@ -42,3 +42,14 @@ class UserEditForm(forms.ModelForm):
         model = User
         fields = ('first_name', 'last_name', 'email')
 
+
+CHOICES = (("Другое", "другое"), ("Продукты", "продукты"), ("Развлечения", "развлечения"),
+               ("Бытовые", "бытовые"), ("Здоровье", "здоровье"), ("Транспорт", "транспорт"),
+               ("Животные", "животные"))
+
+class SpendsAddForm(forms.Form):
+
+    date = forms.DateField(widget=forms.widgets.SelectDateWidget(), initial=date.today())
+    category = forms.ChoiceField(choices=CHOICES)
+    name = forms.CharField(label="Название покупки")
+    sum = forms.IntegerField(label="Сумма")

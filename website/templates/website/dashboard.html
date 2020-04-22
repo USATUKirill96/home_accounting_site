@@ -3,18 +3,40 @@
 {% block title %}Dashboard {% endblock %}
 
 {% block content %}
-    <h1>Список ваших трат</h1>
-<table align="centet" border="1" cellpadding="4" cellspacing="4" frame="solid">
+<style>
+    table{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border: 1px;
+    cellpadding: 4px;
+    cellspacing: 4px;
+    frame: solid;
+    }
+
+</style>
+    <h1 align="center">Список ваших трат</h1>
+<table>
     <tr>
-        <td bgcolor="#FFC0CB">Категория</td><td bgcolor="#FFA07A">Наименование</td><td bgcolor="#FFFFE0">Сумма</td>
+        <td bgcolor="#FFA07A">Дата</td><td bgcolor="#FFC0CB">Категория</td>
+        <td bgcolor="#FFA07A">Наименование</td><td bgcolor="#FFC0CB">Сумма</td>
+    </tr>
+    <tr><form action="." method="post">
+
+        <td bgcolor="#FFA07A">{{spends_form.date}}</td>
+        <td bgcolor="#FFC0CB">{{spends_form.category}}</td>
+        <td bgcolor="#FFA07A">{{spends_form.name}}</td>
+        <td bgcolor="#FFC0CB">{{spends_form.sum}}</td>
+        <td>  {% csrf_token %}<input type="submit" value="Добавить покупку"></td>
+    </form>
     </tr>
 {% for spend in spends %}
     <tr>
+        <td bgcolor="#FFA07A">{{spend.date}}</td>
         <td bgcolor="#FFC0CB">{{spend.category}}</td>
         <td bgcolor="#FFA07A">{{spend.name}}</td>
-        <td bgcolor="#FFFFE0">{{spend.sum}}</td>
+        <td bgcolor="#FFC0CB">{{spend.sum}}</td>
     </tr>
 {% endfor %}
 </table>
-
 {% endblock %}
