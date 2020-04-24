@@ -32,4 +32,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     # edit profile
     path('edit/', views.edit, name='edit'),
+    path('remove/<int:spending_id>/', views.remove, name='remove'),
+    path('edit_spending/', views.edit_spending, name='edit_spendings'),
 ]

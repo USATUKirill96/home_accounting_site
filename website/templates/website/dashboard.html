@@ -42,7 +42,7 @@
         <td bgcolor="#FFC0CB">{{spends_form.category}}</td>
         <td bgcolor="#FFA07A">{{spends_form.name}}</td>
         <td bgcolor="#FFC0CB">{{spends_form.sum}}</td>
-        <td>  {% csrf_token %}<input type="submit" value="Добавить покупку"></td>
+        <td>  {% csrf_token %}<input type="submit" value="Применить"></td>
     </form>
     </tr>
 {% for spend in spends %}
@@ -51,6 +51,11 @@
         <td bgcolor="#FFC0CB">{{spend.category}}</td>
         <td bgcolor="#FFA07A">{{spend.name}}</td>
         <td bgcolor="#FFC0CB">{{spend.sum}}</td>
+        <td>
+            <a href="/edit_spending/?spending_id={{spend.id}}&category={{spend.category}}&date={{spend.date}}&name={{spend.name}}&sum={{spend.sum}}">
+            Редактировать
+        </a></td>
+        <td><a href="/remove/{{spend.id}}">Удалить </a></td>
     </tr>
 {% endfor %}
 </table>
