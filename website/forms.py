@@ -11,11 +11,6 @@ PASSWORD_HELP_TEXT = format_html("""<dl>Ваш пароль не может бы
           Пароль не может состоять из одних цифр</dl>""")
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-
-
 class CustomPasswordChange(PasswordChangeForm):
     new_password1 = forms.CharField(
         label=_("New password"),

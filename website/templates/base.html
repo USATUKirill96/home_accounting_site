@@ -3,49 +3,45 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %}</title>
-    <link href="{% static 'css/base.css' %}" rel="stylesheet">
-</head>
-<body>
-    <div id = "header">
-        <span class="logo">Bookmarks</span>
-{% if request.user.is_authenticated %}
-    <ul class="menu">
-        <li {% if section == "dashboard" %} class="selected"{% endif %}>
-            <a href="{% url 'dashboard' %}">My dashboard</a>
-        </li>
-        <li {% if section == "images" %}class="selected"{% endif %}>
-            <a href="#">Images</a>
-        </li>
-        <li {% if section == "people" %}class="selected"{% endif %}>
-            <a href="#">People</a>
-        </li>
+    <title>{% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <link href="{% static 'css/header.css' %}" rel="stylesheet">
+    <link href="{% static 'css/my_own.css' %}" rel="stylesheet">
 
-        <li><a href="{% url "edit" %}">Редактировать профиль</a> </li>
-        <li><a href="{% url "password_change" %}">Сменить пароль</a>.</li>
+
+</head>
+
+  <body>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="{% url 'dashboard' %}">Главная</a>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+<!--        Копировать как список-->
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dashboard' %}">Анализ расходов <span class="sr-only">(current)</span></a>
+      </li>
+              <li class="nav-item active">
+        <a class="nav-link" href="{% url 'edit' %}">Мои настройки <span class="sr-only">(current)</span></a>
+      </li>
     </ul>
-{% endif %}
-<span class="user">
-    {% if request.user.is_authenticated %}
-        Hello {{ request.user.first_name }},
-        <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <a href="{% url 'login' %}">Log-in</a>
-    {% endif %}
-</span>
-    </div>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">
-                    {{ message|safe }}
-                    <a href="#" class="close">x</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
+          <div class="login">
+              <a href="customer-register.html" class="signup-btn">
+                  <i class="fa fa-user"></i>
+                  <a href="{% url 'logout' %}"><span class="d-none d-md-inline-block">Добрый день, {{request.user.first_name}}. Выйти</span></a>
+              </a>
+          </div>
+  </div>
+</nav>
+
+<br>
+<br>
+<br>
+{% block content %} {%endblock %}
 </body>
 </html>

@@ -1,0 +1,25 @@
+.center_table{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    /*border: 2px solid #000; !* Рамка вокруг таблицы *!*/
+}
+.period{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+TD, TH {
+    padding: 1px; /* Поля вокруг текста */
+    border: 2px solid #fff; /* Рамка вокруг ячеек */
+}
+.design {
+    display: inline-block; /* Строчно-блочный элемент */
+    padding: 5px 20px; /* Добавляем поля */
+    text-decoration: none; /* Убираем подчёркивание у ссылки */
+    cursor: pointer; /* Курсор в виде руки */
+    background: #f3f3f3; /* Фон для браузеров, не поддерживающих градиент */
+    border-radius: 5px; /* Скругляем уголки */
+    font: 14px/1 Arial, sans-serif; /* Рубленый шрифт */
+    color: #000; /* Цвет текста и ссылки */
+}

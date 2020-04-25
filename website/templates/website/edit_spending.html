@@ -1,11 +1,23 @@
 {% extends "base.html" %}
-
 {% block title %}Редактирование {% endblock %}
 {% block content %}
+<br>
+<br>
+<table class="center_table">
+    <tr>
+        <td bgcolor="#DCDCDC">Дата</td><td bgcolor="#FAEBD7">Категория</td>
+        <td bgcolor="#DCDCDC">Наименование</td><td bgcolor="#FAEBD7">Сумма</td>
+    </tr>
+    <tr><form action="." method="post">
 
-<form method="post" action=".">
-    {{spends_form.as_p}}
-    {% csrf_token %}
-    <input type="submit" value="Применить">
+        <td bgcolor="#DCDCDC">{{spends_form.date}}</td>
+        <td bgcolor="#FAEBD7">{{spends_form.category}}</td>
+        <td bgcolor="#DCDCDC">{{spends_form.name}}</td>
+        <td bgcolor="#FAEBD7">{{spends_form.sum}}</td>
+        {{spends_form.spending_id}}
+        <td>  {% csrf_token %}<input type="submit" value="Применить"></td>
+    </form>
+    </tr>
 </form>
+</table>
 {% endblock %}

@@ -36,6 +36,7 @@ AUTHENTICATION_BACKENDS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'spending_analysis',
     'website',
     'django.contrib.admin',
     'django.contrib.auth',

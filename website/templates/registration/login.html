@@ -1,22 +1,51 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %} Log in {% endblock %}
+{% block title %} login {% endblock %}
 
 {% block content %}
-    <h1>Log-in</h1>
-    {% if form.errors %}
-        <p>Имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.</p>
-    {% else %}
-        <p>Пожалуйста, используйте следующую форму для автоизации</p>
-    {% endif %}
-    <div class="login-form">
-        <form action="{% url 'login' %}" method="post">
-            <p><a href="{% url "register" %}">Зарегистрироваться</a></p>
-            <p><a href="{% url "password_reset" %}">Забыли свой пароль?</a></p>
-            {{form.as_p}}
+
+    <div id="logreg-forms">
+            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Войти </h1>
+            <div class="social-login">
+                <button class="btn facebook-btn social-btn" type="button">
+                    <span>
+                        <i class="fab fa-vk"></i>
+                        Войти через VK
+                    </span>
+                </button>
+                <button class="btn google-btn social-btn" type="button">
+                    <span>
+                        <i class="fab fa-google-plus-g"></i>
+                    Войти через Google+
+                    </span>
+                </button>
+            </div>
+        <form class="form-signin" action="." method="post">
+<!--            <input class="form-control" placeholder="Email address" autofocus="" value="{{form.login}}">-->
+            <div class="form-control">
+                <table>
+                {{form.as_table}}
+                </table>
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
             {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}" />
-            <p><input type="submit" value="Log-in"></p>
+            <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Войти</button>
         </form>
+            <a href="{% url 'password_reset' %}" id="forgot_pswd">Забыли пароль?</a>
+            <hr>
+            <!-- <p>Don't have an account!</p>  -->
+        <form action="{% url 'register' %}">
+            <button class="btn btn-primary btn-block">
+                <i class="fas fa-user-plus"></i>
+                Создать аккаунт
+            </button>
+        </form>
+
+
+            <br>
+        {% if form.errors %}
+        <p>Имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.</p>
+        {% endif %}
     </div>
 {% endblock %}

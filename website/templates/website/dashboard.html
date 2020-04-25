@@ -1,29 +1,12 @@
 {% extends "base.html" %}
-
 {% block title %}Dashboard {% endblock %}
 
 {% block content %}
-<style>
-    table{
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    border: 1px;
-    cellpadding: 4px;
-    cellspacing: 4px;
-    frame: solid;
-    }
-    .period{
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    }
 
-</style>
     <h1 align="center">Список ваших трат</h1>
-<table>
+<table class="period">
     <tr>
-<form class="period" action="." method="post">
+<form action="." method="post">
     <td>{{period_form.month}}</td>
     <td>{{period_form.year}}</td>
     <td>{% csrf_token %}</td>
@@ -31,31 +14,41 @@
 </form>
     </tr>
 </table>
-<table>
+<br>
+<table class="container-fluid" style="text-align: center">
     <tr>
-        <td bgcolor="#FFA07A">Дата</td><td bgcolor="#FFC0CB">Категория</td>
-        <td bgcolor="#FFA07A">Наименование</td><td bgcolor="#FFC0CB">Сумма</td>
+        <td bgcolor="#DCDCDC">Дата</td><td bgcolor="#DCDCDC">Категория</td>
+        <td bgcolor="#DCDCDC">Наименование</td><td bgcolor="#DCDCDC">Сумма</td>
+        <td bgcolor="#DCDCDC" colspan="2">Действия</td>
     </tr>
     <tr><form action="." method="post">
 
-        <td bgcolor="#FFA07A">{{spends_form.date}}</td>
-        <td bgcolor="#FFC0CB">{{spends_form.category}}</td>
-        <td bgcolor="#FFA07A">{{spends_form.name}}</td>
-        <td bgcolor="#FFC0CB">{{spends_form.sum}}</td>
-        <td>  {% csrf_token %}<input type="submit" value="Применить"></td>
+        <td bgcolor="#DCDCDC">{{spends_form.date}}</td>
+        <td bgcolor="#DCDCDC">{{spends_form.category}}</td>
+        <td bgcolor="#DCDCDC">{{spends_form.name}}</td>
+        <td bgcolor="#DCDCDC">{{spends_form.sum}}</td>
+        <td bgcolor="#DCDCDC" colspan="2">  {% csrf_token %}<input class="design" type="submit" value="Добавить"></td>
     </form>
     </tr>
 {% for spend in spends %}
     <tr>
-        <td bgcolor="#FFA07A">{{spend.date}}</td>
-        <td bgcolor="#FFC0CB">{{spend.category}}</td>
-        <td bgcolor="#FFA07A">{{spend.name}}</td>
-        <td bgcolor="#FFC0CB">{{spend.sum}}</td>
-        <td>
-            <a href="/edit_spending/?spending_id={{spend.id}}&category={{spend.category}}&date={{spend.date}}&name={{spend.name}}&sum={{spend.sum}}">
-            Редактировать
-        </a></td>
-        <td><a href="/remove/{{spend.id}}">Удалить </a></td>
+        {% cycle "FAEBD7" "DCDCDC" as color silent %}
+        <td bgcolor={{color}}>{{spend.date}}</td>
+        <td bgcolor={{color}}>{{spend.category}}</td>
+        <td bgcolor={{color}}>{{spend.name}}</td>
+        <td bgcolor={{color}}>{{spend.sum}}</td>
+        <td bgcolor="DCDCDC">
+            <a class="design"
+               href="/edit_spending/?spending_id={{spend.id}}&
+               category={{spend.category}}&date={{spend.date}}&name={{spend.name}}&sum={{spend.sum}}">
+                Редактировать
+            </a>
+        </td>
+        <td bgcolor="DCDCDC">
+            <a class="design" href="/remove/{{spend.id}}">
+                Удалить
+            </a>
+        </td>
     </tr>
 {% endfor %}
 </table>

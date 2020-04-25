@@ -29,6 +29,7 @@ def dashboard(request):
             requests.post('http://localhost:8000/api/spends/', data={'user_id': request.user.pk, 'source': 'site',
                                                                      'category': category, 'date': date,
                                                                      'name': name, 'sum': sum, 'common': 'False'})
+            messages.success(request, 'Расход добавлен в таблицу')
         else:
             # user just opened another part of spends (changed month, year)
             spends_form = SpendsAddForm(initial={'date': currentdate.today()})
@@ -113,6 +114,9 @@ def register(request):
             new_user.save()
             # Создание профиля пользователя
             requests.post('http://127.0.0.1:8000/api/users/', data={'user_id': str(new_user.pk)})
+            return render(request,
+                          'website/register_done.html',
+                          {'new_user': new_user})
 
     else:
         user_form = CustomUserRegistrationForm()
