@@ -1,23 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Редактирование {% endblock %}
 {% block content %}
+<h1 style="text-align: center">Редактирование записи</h1>
 <br>
-<br>
-<table class="center_table">
-    <tr>
-        <td bgcolor="#DCDCDC">Дата</td><td bgcolor="#FAEBD7">Категория</td>
-        <td bgcolor="#DCDCDC">Наименование</td><td bgcolor="#FAEBD7">Сумма</td>
-    </tr>
-    <tr><form action="." method="post">
+          <div class="table-responsive" style="text-align: center;">
+            <table class="table table-sm" style="background-color: #DCDCDC;">
+                <form action="." method="post">
+                    <tr>
+                        <td>Дата</td>
+                        <td>{{spends_form.date}}</td>
+                    </tr>
+                    <tr>
+                        <td>Категория</td>
+                        <td>{{spends_form.category}}</td>
+                    </tr>
+                    <tr>
+                        <td>Наименование</td>
+                        <td>{{spends_form.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Сумма</td>
+                        <td>{{spends_form.sum}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                           <input type="submit" value="Применить">
+                        </td>
+                    </tr>
+                            {{spends_form.spending_id}}
 
-        <td bgcolor="#DCDCDC">{{spends_form.date}}</td>
-        <td bgcolor="#FAEBD7">{{spends_form.category}}</td>
-        <td bgcolor="#DCDCDC">{{spends_form.name}}</td>
-        <td bgcolor="#FAEBD7">{{spends_form.sum}}</td>
-        {{spends_form.spending_id}}
-        <td>  {% csrf_token %}<input type="submit" value="Применить"></td>
-    </form>
-    </tr>
-</form>
-</table>
+        {% csrf_token %}
+      </form>
+            </table>
+      </div>
 {% endblock %}

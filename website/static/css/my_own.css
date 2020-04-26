@@ -18,8 +18,10 @@ TD, TH {
     padding: 5px 20px; /* Добавляем поля */
     text-decoration: none; /* Убираем подчёркивание у ссылки */
     cursor: pointer; /* Курсор в виде руки */
-    background: #f3f3f3; /* Фон для браузеров, не поддерживающих градиент */
     border-radius: 5px; /* Скругляем уголки */
     font: 14px/1 Arial, sans-serif; /* Рубленый шрифт */
     color: #000; /* Цвет текста и ссылки */
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px;
 }

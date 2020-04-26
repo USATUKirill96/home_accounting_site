@@ -1,55 +1,116 @@
 {% extends "base.html" %}
-{% block title %}Dashboard {% endblock %}
 
+{% block title %}Dashboard {% endblock %}}
 {% block content %}
 
-    <h1 align="center">Список ваших трат</h1>
-<table class="period">
-    <tr>
-<form action="." method="post">
-    <td>{{period_form.month}}</td>
-    <td>{{period_form.year}}</td>
-    <td>{% csrf_token %}</td>
-    <td><input type="submit" value="Вывести список трат"></td>
-</form>
-    </tr>
-</table>
-<br>
-<table class="container-fluid" style="text-align: center">
-    <tr>
-        <td bgcolor="#DCDCDC">Дата</td><td bgcolor="#DCDCDC">Категория</td>
-        <td bgcolor="#DCDCDC">Наименование</td><td bgcolor="#DCDCDC">Сумма</td>
-        <td bgcolor="#DCDCDC" colspan="2">Действия</td>
-    </tr>
-    <tr><form action="." method="post">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
 
-        <td bgcolor="#DCDCDC">{{spends_form.date}}</td>
-        <td bgcolor="#DCDCDC">{{spends_form.category}}</td>
-        <td bgcolor="#DCDCDC">{{spends_form.name}}</td>
-        <td bgcolor="#DCDCDC">{{spends_form.sum}}</td>
-        <td bgcolor="#DCDCDC" colspan="2">  {% csrf_token %}<input class="design" type="submit" value="Добавить"></td>
-    </form>
-    </tr>
-{% for spend in spends %}
-    <tr>
-        {% cycle "FAEBD7" "DCDCDC" as color silent %}
-        <td bgcolor={{color}}>{{spend.date}}</td>
-        <td bgcolor={{color}}>{{spend.category}}</td>
-        <td bgcolor={{color}}>{{spend.name}}</td>
-        <td bgcolor={{color}}>{{spend.sum}}</td>
-        <td bgcolor="DCDCDC">
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+
+
+      <h3 align="center">Выбор периода</h3>
+      <form action="." method="post">
+          <div class="table-responsive" style="text-align: center; background-color: #DCDCDC;">
+            <table class="table table-sm">
+                   <tr>
+                       <td>Месяц</td>
+                       <td>{{period_form.month}}</td>
+                       <td>Год</td>
+                       <td>{{period_form.year}}</td>
+                   </tr>
+                   {% csrf_token %}
+
+            </table>
+              <input type="submit" value="Вывести список расходов">
+
+      </div>
+      </form>
+      <br>
+            <h3 align="center">Внесение нового расхода</h3>
+
+          <div class="table-responsive" style="text-align: center;">
+            <table class="table table-sm" style="background-color: #DCDCDC;">
+                <form action="." method="post">
+                    <tr>
+                        <td>Дата</td>
+                        <td>{{spends_form.date}}</td>
+                        <td>Категория</td>
+                        <td>{{spends_form.category}}</td>
+                    </tr>
+                    <tr>
+                        <td>Наименование</td>
+                        <td>{{spends_form.name}}</td>
+                        <td>Сумма</td>
+                        <td>{{spends_form.sum}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                           <input type="submit" value="Добавить">
+                        </td>
+                    </tr>
+        {% csrf_token %}
+      </form>
+            </table>
+      </div>
+      <h3 align="center">Расходы за выбранный период</h3>
+
+      <div class="table-responsive" style="text-align: center;">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th>Категория</th>
+              <th>Наименование</th>
+              <th>Сумма</th>
+              <th>Действие</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for spend in spends %}
+            <tr>
+        <td>{{spend.date}}</td>
+        <td>{{spend.category}}</td>
+        <td>{{spend.name}}</td>
+        <td>{{spend.sum}}</td>
+        <td>
             <a class="design"
                href="/edit_spending/?spending_id={{spend.id}}&
                category={{spend.category}}&date={{spend.date}}&name={{spend.name}}&sum={{spend.sum}}">
                 Редактировать
             </a>
-        </td>
-        <td bgcolor="DCDCDC">
             <a class="design" href="/remove/{{spend.id}}">
                 Удалить
             </a>
-        </td>
-    </tr>
-{% endfor %}
-</table>
+                </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+        <script src="dashboard.js"></script></body>
+
 {% endblock %}

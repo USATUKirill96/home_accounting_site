@@ -5,14 +5,16 @@
 <br>
 <br>
 <form action="." method="post" enctype="multipart/form-data">
+    <div class="table-responsive" style="text-align: center;">
     <table class="center_table">
         {{ user_form.as_table }}
         {{ profile_form.as_table }}
         {% csrf_token %}
-        <td>
+        <td colspan="2">
         <p><input type="submit" value="Сохранить изменения"></p>
         </td>
     </table>
+    </div>
 </form>
 <p>Вы также можете изменить пароль, перейдя по этой <a href="{% url 'password_change' %}">ссылке</a>
 </p>
