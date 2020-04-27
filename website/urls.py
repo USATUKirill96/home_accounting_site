@@ -7,8 +7,10 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
     # logout
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    # spendings page
+    path('spendings/', views.dashboard, name='dashboard'),
     # main page
-    path('', views.dashboard, name='dashboard'),
+    path('',views.main, name='main'),
     # password actions
     path('password_change/',
          views.PasswordChangeCustom.as_view(),

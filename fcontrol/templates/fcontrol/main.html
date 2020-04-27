@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Управление финансами {% endblock %}
+
+{% block content %}
+<main role="main">
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+              <a href="/spendings/">
+              <img height="97%" width=97%" src="{% static 'images/lose_money.png' %}">
+              </a>
+            <div class="card-body">
+                <a href="/spendings/">
+                <h3 class="card-text" style="text-align: center;">Управление расходами</h3></p>
+                </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+              <a href="{% url 'fcontrol:incomes' %}">
+              <img height="100%" width="100%" src="{% static 'images/gain_money.png' %}">
+              </a>
+          <div class="card-body">
+              <a href="{% url 'fcontrol:incomes' %}">
+                <h3 class="card-text" style="text-align: center;">Мои доходы</h3></p>
+              </a>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+              <img height="82%" width="82%" src="{% static 'images/credits.png' %}">
+            <div class="card-body">
+                <h3 class="card-text" style="text-align: center;">Кредиты и накопления</h3></p>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+{% endblock %}

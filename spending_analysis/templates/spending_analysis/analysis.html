@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Анализ расходов{% endblock %}
+
+{% block content %}
+{% for object in by_category.items %}
+{{object}} <br>
+{% endfor %}
+{% endblock %}

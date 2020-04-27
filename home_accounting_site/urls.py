@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('website.urls')),
     path('analysis/', include('spending_analysis.urls')),
+    path('control/', include('fcontrol.urls')),
 ]

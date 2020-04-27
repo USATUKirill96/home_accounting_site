@@ -137,3 +137,7 @@ def edit(request):
         user_form = UserEditForm(instance=request.user)
     return render(request, 'website/edit.html',
                   {'user_form': user_form})
+
+@login_required
+def main(request):
+    return render(request, 'website/main.html')
