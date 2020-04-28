@@ -46,7 +46,7 @@ CHOICES = (("Другое", "другое"), ("Продукты", "продук�
 class SpendsAddForm(forms.Form):
     date = forms.DateField(widget=forms.widgets.SelectDateWidget(), initial=date.today())
     category = forms.ChoiceField(choices=CHOICES)
-    name = forms.CharField(label="Название покупки")
+    name = forms.CharField(required=False, label="Название покупки")
     sum = forms.IntegerField(label="Сумма")
 
 

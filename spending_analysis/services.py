@@ -4,8 +4,11 @@ class Analyser:
         result = {}
         for object in json:
             try:
-                result[object['category']] += object['sum']
+                result[str(object['category']).lower()] += object['sum']
             except:
-                result[object['category']] = object['sum']
-        return result
-
+                result[str(object['category']).lower()] = object['sum']
+        pairs_by_categories = []
+        for object in result:
+            pairs_by_categories.append([object, result[object]])
+        print(pairs_by_categories)
+        return pairs_by_categories

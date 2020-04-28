@@ -3,7 +3,68 @@
 {% block title %}Анализ расходов{% endblock %}
 
 {% block content %}
-{% for object in by_category.items %}
-{{object}} <br>
-{% endfor %}
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      // RESIZE
+      window.onresize=drawChart();
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+            {% for pair in by_category %}
+            [String("{{pair.0}}"), Number({{pair.1}})],
+          {% endfor %}
+        ]);
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data);
+        // RESIZE
+        $(window).resize(function(){
+	  	drawChart();
+	});
+      }
+    </script>
+  </head>
+<br>
+<br>
+
+<h1 style="text-align: center">Выберите период для анализа</h1>
+<form action="." method="post">
+  <div class="table-responsive" style="text-align: left; background-color: #fff;">
+    <table class="table table-sm">
+           <tr>
+               <td>Месяц</td>
+               <td>{{period_form.month}}</td>
+           </tr>
+        <tr>
+               <td>Год</td>
+               <td>{{period_form.year}}</td>
+           </tr>
+           {% csrf_token %}
+    </table>
+      <input type="submit" value="Вывести список расходов">
+
+</div>
+</form>
+    <div id="piechart" style="max-width: 100%; height: 500px;"></div>
+
+ <div class="table-responsive" style="text-align: center">
+    <table class="table table-sm">
+
+<tr>
+    {% for pair in by_category%}
+    <td>{{pair.0}}</td>
+    {% endfor %}
+</tr>
+        <tr>
+            {% for pair in by_category %}
+            <td>{{pair.1}}</td>
+            {% endfor %}
+        </tr>
+    </table>
+ </div>
 {% endblock %}

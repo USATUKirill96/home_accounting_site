@@ -7,12 +7,12 @@ from datetime import date
 
 class IncomeAddForm(forms.Form):
     date = forms.DateField(widget=forms.widgets.SelectDateWidget(), initial=date.today())
-    name = forms.CharField(label="Источник")
+    name = forms.CharField(required=False, label="Источник")
     sum = forms.IntegerField(label="Сумма")
 
 
-class IncomeRedactForm(IncomeAddForm):
-    incoming_id = forms.IntegerField(widget=forms.widgets.HiddenInput)
+class IncomeEditForm(IncomeAddForm):
+    operation_id = forms.IntegerField(widget=forms.widgets.HiddenInput)
 
 
 MONTHS = ((1, "январь"), (2, "февраль"), (3, "март"), (4, "апрель"), (5, "май"), (6, "июнь"),

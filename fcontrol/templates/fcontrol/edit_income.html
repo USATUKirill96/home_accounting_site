@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Редактирование {% endblock %}
+{% block content %}
+<h1 style="text-align: center">Редактирование записи</h1>
+<br>
+          <div class="table-responsive" style="text-align: center;">
+            <table class="table table-sm" style="background-color: #DCDCDC;">
+                <form action="." method="post">
+                    <tr>
+                        <td>Дата</td>
+                        <td>{{incomes_form.date}}</td>
+                    </tr>
+                    <tr>
+                        <td>Наименование</td>
+                        <td>{{incomes_form.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Сумма</td>
+                        <td>{{incomes_form.sum}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                           <input type="submit" value="Применить">
+                        </td>
+                    </tr>
+                            {{incomes_form.operation_id}}
+        {% csrf_token %}
+      </form>
+            </table>
+      </div>
+{% endblock %}
