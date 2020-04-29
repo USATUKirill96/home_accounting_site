@@ -4,6 +4,7 @@
 
 {% block content %}
 <head>
+<!--    Pie diagram for incomes-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -28,6 +29,30 @@
 	});
       }
     </script>
+
+<!--    Area chart for incomes/spends difference-->
+        <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Время', 'Доходы', 'Расходы'],
+            {% for unit in difference_chart_data %}
+          ['{{unit.0}}',  {{unit.2}},      {{unit.1}}],
+          {%endfor%}
+        ]);
+
+        var options = {
+          title: 'Накопительная диаграмма расходов и доходов',
+          hAxis: {title: 'Временной промежуток',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+      </script>
   </head>
 <br>
 <br>
@@ -59,12 +84,21 @@
     {% for pair in by_category%}
     <td>{{pair.0}}</td>
     {% endfor %}
+    <td>Сумма расходов</td>
+    <td>Суммарный доход</td>
+    <td>Итог</td>
 </tr>
         <tr>
             {% for pair in by_category %}
             <td>{{pair.1}}</td>
             {% endfor %}
+            <td>{{sum_of_spends}}</td>
+            <td>{{sum_of_incomes}}</td>
+            <td>{{incomes_spends_difference}}</td>
         </tr>
     </table>
  </div>
+
+    <div id="chart_div" style="width: 100%; height: 500px;"></div>
+
 {% endblock %}

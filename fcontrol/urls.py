@@ -6,5 +6,5 @@ urlpatterns = [
     path('', views.main, name='main'),
     path('incomes/', views.incomes, name='incomes'),
     path('edit/', views.edit_income, name='edit'),
-    path('delete/', views.main, name='delete'),
+    path('remove/<int:operation_id>/', views.remove, name='remove'),
 ]

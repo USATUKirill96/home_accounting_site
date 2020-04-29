@@ -95,3 +95,9 @@ def edit_income(request):
 
         return render(request, 'fcontrol/edit_income.html', {'section': 'dashboard', 'incomes_form': incomes_form})
 
+
+@login_required
+def remove(request, operation_id):
+    """Delete the spending and redirect to the main page"""
+    requests.delete(f'http://localhost:8000/api/incomes?operation_id={operation_id}&user_id={request.user.pk}&source=site')
+    return redirect('fcontrol:incomes')

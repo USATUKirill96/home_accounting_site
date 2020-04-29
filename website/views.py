@@ -67,8 +67,8 @@ def dashboard(request):
 @login_required
 def remove(request, spending_id):
     """Delete the spending and redirect to the main page"""
-    requests.delete(f'http://localhost:8000/api/spends/?spending_id={spending_id}')
-    return redirect('/')
+    requests.delete(f'http://localhost:8000/api/spends/?spending_id={spending_id}&user_id={request.user.pk}&source=site')
+    return redirect('dashboard')
 
 
 @login_required
