@@ -1,11 +1,12 @@
-import requests
 from datetime import date as currentdate
 from datetime import datetime
-from django.shortcuts import render
-from django.contrib.auth import views as auth_views
+
+import requests
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.forms import formset_factory
+
 from .forms import *
 
 
@@ -81,11 +82,11 @@ def edit_income(request):
             name = incomes_form.cleaned_data['name']
             sum = incomes_form.cleaned_data['sum']
             operation_id = incomes_form.cleaned_data['operation_id']
-        # if True:
-        #     date = incomes_form.data['date'].clean()
-        #     name = incomes_form.data['name']
-        #     sum = incomes_form.data['sum']
-        #     operation_id = incomes_form.data['operation_id']
+            # if True:
+            #     date = incomes_form.data['date'].clean()
+            #     name = incomes_form.data['name']
+            #     sum = incomes_form.data['sum']
+            #     operation_id = incomes_form.data['operation_id']
             requests.put('http://localhost:8000/api/incomes/', data={'user_id': request.user.pk,
                                                                      'source': 'site',
                                                                      'date': date,
@@ -99,5 +100,58 @@ def edit_income(request):
 @login_required
 def remove(request, operation_id):
     """Delete the spending and redirect to the main page"""
-    requests.delete(f'http://localhost:8000/api/incomes?operation_id={operation_id}&user_id={request.user.pk}&source=site')
+    requests.delete(
+        f'http://localhost:8000/api/incomes?operation_id={operation_id}&user_id={request.user.pk}&source=site')
     return redirect('fcontrol:incomes')
+
+
+@login_required
+def limitations(request):
+    def create_limitation_forms(old_limits):
+        """uses formset factory to create personal form for each limitation. Takes json from REST, returns formset"""
+        initial_data = []
+        for position in old_limits:
+            initial_data.append({'category': position['category'], 'sum': position['sum']})
+        limitations_factory = formset_factory(OldLimitationForm, extra=0)
+        formset = limitations_factory(initial=initial_data)
+        return formset
+
+    if request.method == "POST" and "create" in request.POST:
+        new_limitation = LimitationForm(request.POST)
+
+        if new_limitation.is_valid():
+            category = new_limitation.cleaned_data['category']
+            sum = new_limitation.cleaned_data['sum']
+            requests.post(f"http://localhost:8000/api/limitations/", data={'user_id': request.user.pk,
+                                                                           'source': 'site',
+                                                                           'category': category,
+                                                                           'sum': sum})
+    if request.method == "POST" and "edit" in request.POST:
+        limitations_factory = formset_factory(LimitationForm, extra=0)
+        limitations_set = limitations_factory(request.POST)
+
+        if limitations_set.is_valid():
+            print("da validno")
+            for limitation_form in limitations_set.forms:
+                if True:
+                    sum = limitation_form.cleaned_data['sum']
+                    category = limitation_form.cleaned_data['category']
+                    requests.put(f"http://localhost:8000/api/limitations/", data={'user_id': request.user.pk,
+                                                                                  'source': 'site',
+                                                                                  'category': category,
+                                                                                  'sum': sum})
+
+    new_limitation = LimitationForm()
+    saved_limitations = requests.get(
+        f"http://localhost:8000/api/limitations?user_id={request.user.pk}&source=site")
+    saved_limitations_json = saved_limitations.json()["Limitations"]
+    saved_limitations_forms = create_limitation_forms(saved_limitations_json)
+    render_data = {'section': 'limitations', 'limitations': saved_limitations_forms, 'new_limitation': new_limitation}
+    return render(request, 'fcontrol/limitations.html', render_data)
+
+
+@login_required
+def delete_limitation(request, category):
+    requests.delete(
+        f'http://localhost:8000/api/limitations?category={category}&user_id={request.user.pk}&source=site')
+    return redirect('fcontrol:limitations')

@@ -16,9 +16,8 @@
 
 
 </head>
-
-  <body>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <body style="min-height: 100%">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
        <img height="5%" width="5%" src="{% static 'images/logo.png' %}">
   <a class="navbar-brand" href="{% url 'main' %}"> Главная</a>
       <a class="navbar-brand" href="{% url 'analysis:main' %}">Анализ расходов</a>
@@ -29,10 +28,10 @@
               <span class="d-none d-md-inline-block">Выйти</span>
           </a>
 </nav>
-<br>
-<br>
-<br>
-<br>
+  <div style="position: relative; min-height: 100%">
+  <div style="padding-bottom: 90px">
 {% block content %} {%endblock %}
+  </div>
+  </div>
 </body>
 </html>

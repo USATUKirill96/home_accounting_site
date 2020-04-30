@@ -22,3 +22,22 @@ MONTHS = ((1, "январь"), (2, "февраль"), (3, "март"), (4, "ап
 class IncomesPeriodForm(forms.Form):
     month = forms.ChoiceField(choices=MONTHS, initial=date.today().month.as_integer_ratio())
     year = forms.IntegerField(initial=date.today().year)
+
+
+CATEGORIES = (("Другое", "другое"), ("Продукты", "продукты"), ("Развлечения", "развлечения"),
+              ("Бытовые", "бытовые"), ("Здоровье", "здоровье"), ("Транспорт", "транспорт"),
+              ("Животные", "животные"))
+
+
+class LimitationForm(forms.Form):
+    category = forms.ChoiceField(choices=CATEGORIES, label="Категория")
+    sum = forms.IntegerField(label="Лимит в месяц")
+
+
+class OldLimitationForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+       super(OldLimitationForm, self).__init__(*args, **kwargs)
+       self.fields['category'].widget.attrs['readonly'] = True
+
+    category = forms.CharField(label="Категория")
+    sum = forms.IntegerField(label="Лимит в месяц")

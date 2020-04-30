@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Ограничения и накопления {% endblock %}
+
+{% block content %}
+
+    <h2 align="center">Создать ограничения</h2>
+    <br>
+
+<form action="." method="post">
+<div class="table-responsive" style="text-align: center">
+    <table class="table table-sm" style="max-width: 600px; margin: auto">
+    {{new_limitation.as_table}}
+    </table>
+        {% csrf_token %}
+    <input type="submit" value="Создать" name="create" style="width: 200px">
+</div>
+
+</form>
+<br>
+<h2 align="center">Изменить или удалить ограничения</h2>
+<br>
+<form action="." method="post" enctype="multipart/form-data">
+{{limitations.management_form}}
+{% for form in limitations %}
+        <div class="table-responsive" style="text-align: center;">
+    <table class="table table-sm" style="max-width: 600px; margin: auto">
+{{form.as_table}}
+    </table>
+            <a class="design" href="/control/limitations/remove/{{form.initial.category}}" style="width: 200px">
+                Удалить
+            </a>
+            {% endfor %}
+    {% csrf_token %}
+            <br>
+            <br>
+    <input type="submit" value="Применить изменения" name="edit" style="width: 200px;text-align: center">
+        </div>
+</form>
+{% endblock %}
