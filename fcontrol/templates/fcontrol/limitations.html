@@ -30,11 +30,14 @@
             <a class="design" href="/control/limitations/remove/{{form.initial.category}}" style="width: 200px">
                 Удалить
             </a>
-            {% endfor %}
-    {% csrf_token %}
+            {% if forloop.last %}
+                {% csrf_token %}
             <br>
             <br>
     <input type="submit" value="Применить изменения" name="edit" style="width: 200px;text-align: center">
+            {% endif %}
+            {% endfor %}
+
         </div>
 </form>
 {% endblock %}
